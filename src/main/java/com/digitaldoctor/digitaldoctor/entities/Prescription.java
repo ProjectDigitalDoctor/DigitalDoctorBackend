@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @ManyToOne
     private Patient patient;

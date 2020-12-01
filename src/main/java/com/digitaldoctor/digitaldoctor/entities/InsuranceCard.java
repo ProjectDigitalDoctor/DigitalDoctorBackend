@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class InsuranceCard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String insuranceNumber;
     @ManyToOne

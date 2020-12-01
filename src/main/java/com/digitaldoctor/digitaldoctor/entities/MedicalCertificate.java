@@ -3,12 +3,11 @@ package com.digitaldoctor.digitaldoctor.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.Duration;
+import java.sql.Date;
 
 @Data
 @Entity
-public class Appointment {
+public class MedicalCertificate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,7 +16,6 @@ public class Appointment {
     private Patient patient;
     @ManyToOne
     private Doctor doctor;
-    private Timestamp timestamp;
-    private Duration duration;
     private String reason;
+    private Date validUntil;
 }

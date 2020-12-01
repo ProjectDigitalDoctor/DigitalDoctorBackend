@@ -10,7 +10,7 @@ import java.util.List;
 public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "manufacturer")
     private List<Drug> drugs;
