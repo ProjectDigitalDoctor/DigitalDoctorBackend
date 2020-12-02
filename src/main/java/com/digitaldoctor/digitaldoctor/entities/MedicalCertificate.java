@@ -9,7 +9,7 @@ import java.sql.Date;
 @Entity
 public class MedicalCertificate {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

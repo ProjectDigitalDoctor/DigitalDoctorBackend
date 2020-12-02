@@ -1,6 +1,5 @@
 package com.digitaldoctor.digitaldoctor.controller;
 
-import com.digitaldoctor.digitaldoctor.entities.Appointment;
 import com.digitaldoctor.digitaldoctor.entities.Prescription;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
