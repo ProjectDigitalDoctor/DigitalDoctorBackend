@@ -5,25 +5,42 @@ import com.digitaldoctor.digitaldoctor.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+class PatientNotFoundException extends RuntimeException {
+    PatientNotFoundException(Long id) {
+        super("Could not find patient with id " + id);
+    }
+}
+
 @RestController
 @RequiredArgsConstructor
 public class PatientController {
-    private static PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
+    private final Long loggedInUserID = 1L;
 
     @GetMapping("/patient")
     Patient getLoggedInPatient() {
-        Patient patient = new Patient();
-        patient.setFirstName("Hubertus");
-        patient.setLastName("Maier");
-        return patient;
+        return patientRepository.findById(loggedInUserID)
+                .orElseThrow(() -> new PatientNotFoundException(loggedInUserID));
     }
 
     @PostMapping("/patient")
     Patient createPatient(@RequestBody Patient newPatient) {
-        return newPatient;
+        return patientRepository.save(newPatient);
     }
 
     @PutMapping("/patient")
-    void updateLoggedInPatient(@RequestBody Patient updatedPatient) {
+    Patient updateLoggedInPatient(@RequestBody Patient updatedPatient) {
+        return patientRepository.findById(loggedInUserID)
+                .map(patient -> {
+                    patient.setFirstName(updatedPatient.getFirstName());
+                    patient.setLastName(updatedPatient.getLastName());
+                    patient.setBirthdate(updatedPatient.getBirthdate());
+                    patient.setInsuranceCard(updatedPatient.getInsuranceCard());
+                    patient.setWorkplace(updatedPatient.getWorkplace());
+                    return patientRepository.save(patient);
+                })
+                .orElseGet(() -> {
+                    return patientRepository.save(updatedPatient);
+                });
     }
 }

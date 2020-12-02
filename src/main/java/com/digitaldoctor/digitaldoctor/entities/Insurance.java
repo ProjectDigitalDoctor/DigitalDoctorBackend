@@ -12,6 +12,6 @@ public class Insurance {
     private Long id;
 
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 }

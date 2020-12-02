@@ -12,6 +12,6 @@ public class InsuranceCard {
     private Long id;
 
     private String insuranceNumber;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Insurance insurance;
 }

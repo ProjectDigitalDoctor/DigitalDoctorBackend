@@ -1,5 +1,6 @@
 package com.digitaldoctor.digitaldoctor.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,14 +17,16 @@ public class Patient {
     private String firstName;
     private String lastName;
     private Date birthdate;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Workplace workplace;
     @OneToMany(mappedBy = "patient")
+    @JsonIgnore
     private List<Appointment> appointments;
     @OneToMany(mappedBy = "patient")
+    @JsonIgnore
     private List<Prescription> prescriptions;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private InsuranceCard insuranceCard;
 }
