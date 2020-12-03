@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.Duration;
 
 @Configuration
 public class DBLoader {
@@ -21,7 +23,8 @@ public class DBLoader {
             DoctorRepository doctorRepository,
             PrescriptionRepository prescriptionRepository,
             DrugRepository drugRepository,
-            MedicalCertificateRepository medicalCertificateRepository
+            MedicalCertificateRepository medicalCertificateRepository,
+            AppointmentRepository appointmentRepository
     ) {
         return args -> {
             initDoctor(doctorRepository);
@@ -29,6 +32,7 @@ public class DBLoader {
             initDrug(drugRepository);
             initPrescription(prescriptionRepository, patientRepository, doctorRepository, drugRepository);
             initMedicalCertificate(medicalCertificateRepository, patientRepository, doctorRepository);
+            initAppointment(appointmentRepository, patientRepository, doctorRepository);
         };
     }
 
@@ -102,6 +106,23 @@ public class DBLoader {
                 doctor,
                 "Urlaubsentzug",
                 Date.valueOf("2021-01-10")
+        ));
+    }
+
+    private void initAppointment(
+            AppointmentRepository appointmentRepository,
+            PatientRepository patientRepository,
+            DoctorRepository doctorRepository
+    ) {
+        Doctor doctor = doctorRepository.findById(1L).orElseThrow();
+        Patient patient = patientRepository.findById(1L).orElseThrow();
+        insertIfNonExistent(appointmentRepository, 1L, new Appointment(
+                1L,
+                patient,
+                doctor,
+                Timestamp.valueOf("2020-12-10 10:15:00"),
+                Duration.ofHours(1),
+                "Routine Untersuchung"
         ));
     }
 
