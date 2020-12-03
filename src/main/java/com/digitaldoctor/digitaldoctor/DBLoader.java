@@ -1,10 +1,7 @@
 package com.digitaldoctor.digitaldoctor;
 
 import com.digitaldoctor.digitaldoctor.entities.*;
-import com.digitaldoctor.digitaldoctor.repositories.DoctorRepository;
-import com.digitaldoctor.digitaldoctor.repositories.DrugRepository;
-import com.digitaldoctor.digitaldoctor.repositories.PatientRepository;
-import com.digitaldoctor.digitaldoctor.repositories.PrescriptionRepository;
+import com.digitaldoctor.digitaldoctor.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Configuration
 public class DBLoader {
@@ -26,13 +20,15 @@ public class DBLoader {
             PatientRepository patientRepository,
             DoctorRepository doctorRepository,
             PrescriptionRepository prescriptionRepository,
-            DrugRepository drugRepository
+            DrugRepository drugRepository,
+            MedicalCertificateRepository medicalCertificateRepository
     ) {
         return args -> {
             initDoctor(doctorRepository);
             initPatient(patientRepository);
             initDrug(drugRepository);
             initPrescription(prescriptionRepository, patientRepository, doctorRepository, drugRepository);
+            initMedicalCertificate(medicalCertificateRepository, patientRepository, doctorRepository);
         };
     }
 
@@ -41,7 +37,7 @@ public class DBLoader {
                 1L,
                 "Hubertus",
                 "Maier",
-                new Date(1955, 10, 01),
+                Date.valueOf("1954-12-28"),
                 new Address(null, "Theresienstraße", "95", "12803", "Waldhausen"),
                 new Workplace(null, "ABC GmbH", "mail@abc.de", new Address(null, "Haldenweg", "7", "12805", "Waldhausen")),
                 null,
@@ -90,6 +86,22 @@ public class DBLoader {
                 doctor,
                 drug,
                 "Jeden Morgen"
+        ));
+    }
+
+    private void initMedicalCertificate(
+            MedicalCertificateRepository medicalCertificateRepository,
+            PatientRepository patientRepository,
+            DoctorRepository doctorRepository
+    ) {
+        Doctor doctor = doctorRepository.findById(1L).orElseThrow();
+        Patient patient = patientRepository.findById(1L).orElseThrow();
+        insertIfNonExistent(medicalCertificateRepository, 1L, new MedicalCertificate(
+                1L,
+                patient,
+                doctor,
+                "Urlaubsentzug",
+                Date.valueOf("2021-01-10")
         ));
     }
 
