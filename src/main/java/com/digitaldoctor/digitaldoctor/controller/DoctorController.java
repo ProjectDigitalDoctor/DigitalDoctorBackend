@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+class DoctorNotFoundException extends RuntimeException {
+    DoctorNotFoundException(Long id) {
+        super("Could not find doctor with id " + id);
+    }
+}
+
 @RestController
 @RequiredArgsConstructor
 public class DoctorController {
@@ -16,7 +22,7 @@ public class DoctorController {
 
     @GetMapping("/doctor/{id}")
     Doctor getDoctorByID(@PathVariable Long id) {
-        return doctorRepository.findById(id).orElseThrow();
+        return doctorRepository.findById(id).orElseThrow(() -> new DoctorNotFoundException(id));
     }
 
     @GetMapping("/doctor/search")

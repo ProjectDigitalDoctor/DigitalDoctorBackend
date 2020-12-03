@@ -2,7 +2,9 @@ package com.digitaldoctor.digitaldoctor;
 
 import com.digitaldoctor.digitaldoctor.entities.*;
 import com.digitaldoctor.digitaldoctor.repositories.DoctorRepository;
+import com.digitaldoctor.digitaldoctor.repositories.DrugRepository;
 import com.digitaldoctor.digitaldoctor.repositories.PatientRepository;
+import com.digitaldoctor.digitaldoctor.repositories.PrescriptionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -11,16 +13,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class DBLoader {
     private static final Logger log = LoggerFactory.getLogger(DBLoader.class);
 
     @Bean
-    CommandLineRunner initDatabase(PatientRepository patientRepository, DoctorRepository doctorRepository) {
+    CommandLineRunner initDatabase(
+            PatientRepository patientRepository,
+            DoctorRepository doctorRepository,
+            PrescriptionRepository prescriptionRepository,
+            DrugRepository drugRepository
+    ) {
         return args -> {
             initDoctor(doctorRepository);
             initPatient(patientRepository);
+            initDrug(drugRepository);
+            initPrescription(prescriptionRepository, patientRepository, doctorRepository, drugRepository);
         };
     }
 
@@ -53,7 +65,35 @@ public class DBLoader {
                 "HNO"));
     }
 
-    private <T> void insertIfNonExistent(JpaRepository<T, Long> repository, Long id, T object) {
+    private void initDrug(DrugRepository repository) {
+        insertIfNonExistent(repository, "AAA123", new Drug(
+                "AAA123",
+                "My Drug",
+                new Manufacturer(null, null, "That Manufacturer", new Address()),
+                "None",
+                "Oral",
+                null
+        ));
+    }
+
+    private void initPrescription(
+            PrescriptionRepository prescriptionRepository,
+            PatientRepository patientRepository,
+            DoctorRepository doctorRepository,
+            DrugRepository drugRepository) {
+        Doctor doctor = doctorRepository.findById(1L).orElseThrow();
+        Patient patient = patientRepository.findById(1L).orElseThrow();
+        Drug drug = drugRepository.findById("AAA123").orElseThrow();
+        insertIfNonExistent(prescriptionRepository, 1L, new Prescription(
+                1L,
+                patient,
+                doctor,
+                drug,
+                "Jeden Morgen"
+        ));
+    }
+
+    private <T, S> void insertIfNonExistent(JpaRepository<T, S> repository, S id, T object) {
         if (repository.findById(id).isEmpty())
             log.info("Preloading " + repository.save(object));
     }

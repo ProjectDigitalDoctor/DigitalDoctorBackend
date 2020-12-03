@@ -1,27 +1,33 @@
 package com.digitaldoctor.digitaldoctor.controller;
 
 import com.digitaldoctor.digitaldoctor.entities.Prescription;
+import com.digitaldoctor.digitaldoctor.repositories.PrescriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+
+class PrescriptionNotFoundException extends RuntimeException {
+    PrescriptionNotFoundException(Long id) {
+        super("Could not find prescription with id " + id);
+    }
+}
 
 @RestController
 @RequiredArgsConstructor
 public class PrescriptionController {
+    private final PrescriptionRepository prescriptionRepository;
+    private final Long loggedInUserID = 1L;
+
     @GetMapping("/prescription")
     List<Prescription> getPrescriptions() {
-        List<Prescription> prescriptions = new ArrayList<>();
-        prescriptions.add(getPrescription(0L));
-        return prescriptions;
+        return prescriptionRepository.findByPatientId(loggedInUserID);
     }
 
     @GetMapping("/prescription/{id}")
     Prescription getPrescription(@PathVariable Long id) {
-        Prescription prescription = new Prescription();
-        prescription.setUsageDescription("Test Prescription");
-        return prescription;
+        return prescriptionRepository.findByIdAndPatientId(id, loggedInUserID)
+                .orElseThrow(() -> new PrescriptionNotFoundException(id));
     }
 
     @GetMapping("/prescription/{id}/offer")

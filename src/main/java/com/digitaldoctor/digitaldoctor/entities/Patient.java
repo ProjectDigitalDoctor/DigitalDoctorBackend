@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -27,9 +28,11 @@ public class Patient {
     private Workplace workplace;
     @OneToMany(mappedBy = "patient")
     @JsonIgnore
+    @ToString.Exclude
     private List<Appointment> appointments;
     @OneToMany(mappedBy = "patient")
     @JsonIgnore
+    @ToString.Exclude
     private List<Prescription> prescriptions;
     @OneToOne(cascade = CascadeType.ALL)
     private InsuranceCard insuranceCard;
