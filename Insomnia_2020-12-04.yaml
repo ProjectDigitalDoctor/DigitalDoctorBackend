@@ -1,0 +1,440 @@
+_type: export
+__export_format: 4
+__export_date: 2020-12-04T14:40:29.769Z
+__export_source: insomnia.desktop.app:v2020.5.1
+resources:
+  - _id: req_549d47c7b5e2427fa71130b95fa47591
+    parentId: fld_3cdc8521332244a7a71e11e99b3f3a84
+    modified: 1607003499300
+    created: 1607003491290
+    url: "{{ _.baseUrl }}/appointment"
+    name: Get Appointments
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1607003491353
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_3cdc8521332244a7a71e11e99b3f3a84
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1607003484029
+    created: 1607003484029
+    name: Appointment
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1607003484029
+    _type: request_group
+  - _id: wrk_77831b2acbd843f58e162620891b361c
+    parentId: null
+    modified: 1606934302081
+    created: 1606934302081
+    name: DigitalDoctor
+    description: ""
+    scope: null
+    _type: workspace
+  - _id: req_f64f213cfc1c43d397c2f3c1c503862a
+    parentId: fld_3cdc8521332244a7a71e11e99b3f3a84
+    modified: 1607003522317
+    created: 1607003519781
+    url: "{{ _.baseUrl }}/appointment/1"
+    name: Get Appointment By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1607001553504
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7998ad69ee7344b7a20d4b233017c347
+    parentId: fld_3cdc8521332244a7a71e11e99b3f3a84
+    modified: 1607003612800
+    created: 1607003542090
+    url: "{{ _.baseUrl }}/appointment/1"
+    name: Update Appointment
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "timestamp": "2020-15-10T09:15:00.000+00:00",
+          "duration": "PT2H"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_0c2dae1029dd459c8488f668df0f851c
+    authentication: {}
+    metaSortKey: -1607000584579.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b3552f9c83774e8dae390aea29aa88af
+    parentId: fld_3cdc8521332244a7a71e11e99b3f3a84
+    modified: 1607003662318
+    created: 1607003654623
+    url: "{{ _.baseUrl }}/appointment/1"
+    name: Delete Appointment
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1607000100117.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5fc80590db7a42b98389f8cd40dcef4f
+    parentId: fld_a705a2c7c5144a9e8a5ef0725bb5069f
+    modified: 1606999632031
+    created: 1606999615655
+    url: "{{ _.baseUrl }}/medical-certificate"
+    name: Get Medical Certificates
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606999615655
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_a705a2c7c5144a9e8a5ef0725bb5069f
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606999609228
+    created: 1606999609228
+    name: Medical Certificate
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1606999609228
+    _type: request_group
+  - _id: req_1ab1d0b7788845ce8ddc7f758c08f94b
+    parentId: fld_a705a2c7c5144a9e8a5ef0725bb5069f
+    modified: 1606999663768
+    created: 1606999660255
+    url: "{{ _.baseUrl }}/medical-certificate/1"
+    name: Get Medical Certificate By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606999348848.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9742dcf56d29430582ba7a19b555ab0c
+    parentId: fld_69075250896d406e82673a2c9d8945f9
+    modified: 1606999096997
+    created: 1606999082042
+    url: "{{ _.baseUrl }}/drug/AAA123"
+    name: Get Drug By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606999082042
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_69075250896d406e82673a2c9d8945f9
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606999076001
+    created: 1606999076001
+    name: Drug
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1606999076001
+    _type: request_group
+  - _id: req_fc7b996c250245ab9ad2ce43d85452ca
+    parentId: fld_2e7e45ead6034031968cc07e9879cdd9
+    modified: 1606986939194
+    created: 1606986927944
+    url: "{{ _.baseUrl }}/prescription"
+    name: Get Prescriptions
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606986927944
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_2e7e45ead6034031968cc07e9879cdd9
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606986879760
+    created: 1606986879760
+    name: Prescription
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1606986879760
+    _type: request_group
+  - _id: req_0e317af54be74562bd37798d8bfbaf7f
+    parentId: fld_2e7e45ead6034031968cc07e9879cdd9
+    modified: 1606986955573
+    created: 1606986952880
+    url: "{{ _.baseUrl }}/prescription/1"
+    name: Get Prescription By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606967503533.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8c800b1a0c2f48b2ba9f9e946ecaad99
+    parentId: fld_a824a0ef38a243ada09c2945f80cf49e
+    modified: 1606950103606
+    created: 1606948079123
+    url: "{{ _.baseUrl }}/doctor/2"
+    name: Get Doctor By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606948079123
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_a824a0ef38a243ada09c2945f80cf49e
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606948073577
+    created: 1606948073577
+    name: Doctor
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1606948073577
+    _type: request_group
+  - _id: req_8ea3d8a606834a6f8b485dcaaadffe6b
+    parentId: fld_a824a0ef38a243ada09c2945f80cf49e
+    modified: 1606986911621
+    created: 1606986888345
+    url: "{{ _.baseUrl }}/doctor/search"
+    name: Search Doctors
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: "{}"
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_65e1e359909f4a64957723eec8035ccd
+    authentication: {}
+    metaSortKey: -1606941203480.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c2bd7ad2231b4958b76c8ee2de57a869
+    parentId: fld_bcffae35a5f04784b3193f19bb436a8c
+    modified: 1606948069431
+    created: 1606934327738
+    url: "{{ _.baseUrl }}/patient"
+    name: Get Patient
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1606934327838
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_bcffae35a5f04784b3193f19bb436a8c
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606948058781
+    created: 1606948058781
+    name: Patient
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1606948058781
+    _type: request_group
+  - _id: req_8283d701abc644dd87156ba283fcd7ed
+    parentId: fld_bcffae35a5f04784b3193f19bb436a8c
+    modified: 1606948065810
+    created: 1606934510049
+    url: "{{ _.baseUrl }}/patient"
+    name: Update Patient
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"firstName": "Test",
+        	"lastName": "User",
+        	"insuranceCard": {
+        		"insuranceNumber": "AAABBCCC",
+        		"insurance": {
+        			"name": "My Insurance"
+        		}
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_2909b9873e504d5d9324176137b8c4a6
+    authentication: {}
+    metaSortKey: -1606934327788
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_78f94f11d6364c35b0a1be77156751d8
+    parentId: fld_bcffae35a5f04784b3193f19bb436a8c
+    modified: 1606948067464
+    created: 1606934794676
+    url: "{{ _.baseUrl }}/patient"
+    name: Create Patient
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"firstName": "Test",
+        	"lastName": "User",
+        	"insuranceCard": {
+        		"insuranceNumber": "AAABBCCC",
+        		"insurance": {
+        			"name": "My Insurance"
+        		}
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_2909b9873e504d5d9324176137b8c4a6
+    authentication: {}
+    metaSortKey: -1606934327763
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_12b04bb599c3a2f569098a5cc143ddd964b98618
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606934342350
+    created: 1606934302300
+    name: Base Environment
+    data:
+      baseUrl: localhost:8080
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: null
+    isPrivate: false
+    metaSortKey: 1606934302300
+    _type: environment
+  - _id: jar_12b04bb599c3a2f569098a5cc143ddd964b98618
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606934302307
+    created: 1606934302307
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_fff70a5b3146439991766c38ec2160a6
+    parentId: wrk_77831b2acbd843f58e162620891b361c
+    modified: 1606934302099
+    created: 1606934302099
+    fileName: DigitalDoctor
+    contents: ""
+    contentType: yaml
+    _type: api_spec
