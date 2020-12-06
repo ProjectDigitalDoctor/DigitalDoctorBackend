@@ -6,9 +6,18 @@
     <script src="https://media.twiliocdn.com/sdk/js/video/v1/twilio-video.min.js"></script>
 </head>
 <body>
-    <input type="text" id="sip_input">
-    <input type="button" id="connect_button" onclick="joinRoom()" value="Connect">
+    <label>Appointment ID: </label>
+    <input type="text" id="appointment_input">
+    <br>
+    <label>Patient Login (for Join only): </label>
+    <input type="text" id="user_input">
+    <input type="text" id="password_input">
+    <br>
+    <input type="button" id="create_button" onclick="createRoom()" value="Create Room & Join">
+    <input type="button" id="join_button" onclick="joinRoom()" value="Join Room">
+
     <div id="remote-media-div"></div>
+
     <script src="script.js"></script>
 </body>
 </html>

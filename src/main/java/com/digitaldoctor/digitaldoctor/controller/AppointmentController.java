@@ -6,15 +6,24 @@ import com.digitaldoctor.digitaldoctor.entities.Doctor;
 import com.digitaldoctor.digitaldoctor.entities.Patient;
 import com.digitaldoctor.digitaldoctor.repositories.AppointmentRepository;
 import com.digitaldoctor.digitaldoctor.repositories.PatientRepository;
+import com.twilio.twiml.video.Room;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class AppointmentNotFoundException extends RuntimeException {
     AppointmentNotFoundException(Long id) {
         super("Could not find appointment with id " + id);
+    }
+}
+class AppointmentNotStartedException extends RuntimeException {
+    AppointmentNotStartedException(Long id) {
+        super("Appointment with id " + id + " has not yet started");
     }
 }
 
@@ -60,13 +69,37 @@ public class AppointmentController {
         appointmentRepository.deleteByIdAndPatientId(id, loggedInUserID);
     }
 
+    @AllArgsConstructor
+    private class RoomReturn {
+        public String roomName;
+        public String accessKey;
+    }
+
     @PostMapping("/appointment/{id}/join")
     Object joinAppointment(@PathVariable Long id) {
-        return null;
+        Appointment appointment = appointmentRepository.findByIdAndPatientId(id, loggedInUserID)
+                .orElseThrow(() -> new AppointmentNotFoundException(id));
+
+        if (appointment.getVideoRoomName() == null || appointment.getVideoRoomName().isBlank()) {
+            throw new AppointmentNotStartedException(id);
+        }
+
+        String accessKey = twilioRoom.getAccessKey(appointment.getVideoRoomName(), loggedInUserID.toString());
+
+        return new RoomReturn(appointment.getVideoRoomName(), accessKey);
     }
 
     @PostMapping("/appointment/{id}/create-room")
-    String createAppointmentRoom(@PathVariable Long id) {
-        return twilioRoom.open();
+    RoomReturn createAppointmentRoom(@PathVariable Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new AppointmentNotFoundException(id));
+
+        String roomName = twilioRoom.open();
+        appointment.setVideoRoomName(roomName);
+        appointmentRepository.save(appointment);
+
+        String accessKey = twilioRoom.getAccessKey(roomName, "doctor");
+
+        return new RoomReturn(roomName, accessKey);
     }
 }
