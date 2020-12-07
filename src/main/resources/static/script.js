@@ -23,21 +23,32 @@ function fetchAndJoin(url) {
         .catch((error) => console.error('Create Room Error:', error));
 }
 
+function addParticipant(participant) {
+    participant.tracks.forEach(publication => {
+      if (publication.track) {
+        document.getElementById('remote-media-div').appendChild(publication.track.attach());
+      }
+    });
+
+    participant.on('trackSubscribed', track => {
+      document.getElementById('remote-media-div').appendChild(track.attach());
+    });
+}
+
 function internalJoin(roomName, accessKey) {
     console.log(`Join Room with name: ${roomName}`);
 
     Video.connect(accessKey, { name: roomName }).then(room => {
       console.log(`Successfully joined a Room: ${room}`);
+
+      room.participants.forEach(participant => {
+        console.log(`Participant already in room: ${participant}`);
+        addParticipant(participant);
+      });
+
       room.on('participantConnected', participant => {
         console.log(`A remote Participant connected: ${participant}`);
-
-        participant.tracks.forEach(track => {
-          document.getElementById('remote-media-div').appendChild(track.attach());
-        });
-
-        participant.on('trackAdded', track => {
-          document.getElementById('remote-media-div').appendChild(track.attach());
-        });
+        addParticipant(participant);
       });
     }, error => {
       console.error(`Unable to connect to Room: ${error.message}`);
