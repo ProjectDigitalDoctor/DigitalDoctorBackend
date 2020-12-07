@@ -38,3 +38,6 @@ out/
 
 ### SQLite Database ###
 database.db
+
+### Secrets ###
+.env

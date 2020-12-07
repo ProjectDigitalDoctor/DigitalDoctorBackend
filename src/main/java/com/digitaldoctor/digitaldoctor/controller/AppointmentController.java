@@ -1,5 +1,6 @@
 package com.digitaldoctor.digitaldoctor.controller;
 
+import com.digitaldoctor.digitaldoctor.components.TwilioRoom;
 import com.digitaldoctor.digitaldoctor.entities.Appointment;
 import com.digitaldoctor.digitaldoctor.entities.Doctor;
 import com.digitaldoctor.digitaldoctor.entities.Patient;
@@ -21,6 +22,7 @@ class AppointmentNotFoundException extends RuntimeException {
 @RequiredArgsConstructor
 public class AppointmentController {
     private final AppointmentRepository appointmentRepository;
+    private final TwilioRoom twilioRoom;
     private final Long loggedInUserID = 1L;
 
     @GetMapping("/appointment")
@@ -61,5 +63,10 @@ public class AppointmentController {
     @PostMapping("/appointment/{id}/join")
     Object joinAppointment(@PathVariable Long id) {
         return null;
+    }
+
+    @PostMapping("/appointment/{id}/create-room")
+    String createAppointmentRoom(@PathVariable Long id) {
+        return twilioRoom.open();
     }
 }
