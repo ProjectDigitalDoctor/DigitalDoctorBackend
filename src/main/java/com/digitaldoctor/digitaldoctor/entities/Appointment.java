@@ -26,4 +26,5 @@ public class Appointment {
     private Timestamp timestamp;
     private Duration duration;
     private String reason;
+    private String videoRoomName;
 }

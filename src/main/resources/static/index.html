@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DigitalDoctor - Doctor Interface</title>
+    <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.8.0/twilio-video.min.js"></script>
+</head>
+<body>
+    <label>Appointment ID: </label>
+    <input type="text" id="appointment_input">
+    <br>
+    <label>Patient Login (for Join only): </label>
+    <input type="text" id="user_input">
+    <input type="text" id="password_input">
+    <br>
+    <input type="button" id="create_button" onclick="createRoom()" value="Create Room & Join">
+    <input type="button" id="join_button" onclick="joinRoom()" value="Join Room">
+
+    <div id="remote-media-div"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

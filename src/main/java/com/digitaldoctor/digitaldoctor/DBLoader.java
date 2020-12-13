@@ -122,7 +122,8 @@ public class DBLoader {
                 doctor,
                 Timestamp.valueOf("2020-12-10 10:15:00"),
                 Duration.ofHours(1),
-                "Routine Untersuchung"
+                "Routine Untersuchung",
+                null
         ));
     }
 
