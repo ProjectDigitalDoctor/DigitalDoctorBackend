@@ -53,7 +53,7 @@ public class DBLoader {
     private void initDoctor(DoctorRepository repository) {
         insertIfNonExistent(repository, 1L, new Doctor(
                 1L,
-                "Johannes",
+                "Dr. Johannes",
                 "Müller",
                 new Address(null, "Sophienstraße", "41", "82375", "Hintertupfingen"),
                 "Allgemeinmediziner"));
@@ -89,7 +89,9 @@ public class DBLoader {
                 patient,
                 doctor,
                 drug,
-                "Jeden Morgen"
+                "Jeden Morgen",
+                Date.valueOf("2020-11-10"),
+                Date.valueOf("2021-03-15")
         ));
     }
 
@@ -120,9 +122,18 @@ public class DBLoader {
                 1L,
                 patient,
                 doctor,
-                Timestamp.valueOf("2020-12-10 10:15:00"),
-                Duration.ofHours(1),
+                Timestamp.valueOf("2021-02-10 10:15:00"),
+                60,
                 "Routine Untersuchung",
+                null
+        ));
+        insertIfNonExistent(appointmentRepository, 2L, new Appointment(
+                2L,
+                patient,
+                doctor,
+                Timestamp.valueOf("2021-02-25 08:00:00"),
+                40,
+                "Untersuchung bzg. ...",
                 null
         ));
     }

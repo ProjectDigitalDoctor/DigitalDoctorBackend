@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -24,4 +25,6 @@ public class Prescription {
     @ManyToOne
     private Drug drug;
     private String usageDescription;
+    private Date dateOfIssue;
+    private Date validUntil;
 }

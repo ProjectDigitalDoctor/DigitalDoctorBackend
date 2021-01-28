@@ -24,7 +24,7 @@ public class Appointment {
     @ManyToOne
     private Doctor doctor;
     private Timestamp timestamp;
-    private Duration duration;
+    private Integer duration; // in minutes
     private String reason;
     private String videoRoomName;
 }
