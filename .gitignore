@@ -40,3 +40,6 @@ database.db
 
 ### Secrets ###
 .env
+
+
+.DS_Store
