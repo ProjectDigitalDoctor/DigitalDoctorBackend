@@ -27,4 +27,5 @@ public class Prescription {
     private String usageDescription;
     private Date dateOfIssue;
     private Date validUntil;
+    private Boolean redeemed;
 }

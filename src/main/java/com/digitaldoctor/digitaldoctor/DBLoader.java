@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class DBLoader {
@@ -24,7 +26,9 @@ public class DBLoader {
             PrescriptionRepository prescriptionRepository,
             DrugRepository drugRepository,
             MedicalCertificateRepository medicalCertificateRepository,
-            AppointmentRepository appointmentRepository
+            AppointmentRepository appointmentRepository,
+            ShopRepository shopRepository,
+            OfferRepository offerRepository
     ) {
         return args -> {
             initDoctor(doctorRepository);
@@ -33,6 +37,8 @@ public class DBLoader {
             initPrescription(prescriptionRepository, patientRepository, doctorRepository, drugRepository);
             initMedicalCertificate(medicalCertificateRepository, patientRepository, doctorRepository);
             initAppointment(appointmentRepository, patientRepository, doctorRepository);
+            initShop(shopRepository);
+            initOffers(offerRepository, drugRepository, shopRepository);
         };
     }
 
@@ -76,6 +82,41 @@ public class DBLoader {
         ));
     }
 
+    private void initShop(ShopRepository repository) {
+        insertIfNonExistent(repository, 1L, new Shop(
+                1L,
+                "Online Apotheke BliBlaBlub",
+                new Address(null, "Marktstraße", "27", "21343", "Berlin"),
+                "info@apotheke-bliblablub.de",
+                null
+        ));
+        insertIfNonExistent(repository, 2L, new Shop(
+                2L,
+                "Online Apotheke PiPaPo",
+                new Address(null, "Hermannstraße", "82A", "93234", "Hamburg"),
+                "info@apotheke-PiPaPo.de",
+                null
+        ));
+    }
+
+    private void initOffers(OfferRepository repository, DrugRepository drugRepository, ShopRepository shopRepository) {
+        Drug drug = drugRepository.findById("AAA123").orElseThrow();
+        Shop shop1 = shopRepository.findById(1L).orElseThrow();
+        Shop shop2 = shopRepository.findById(2L).orElseThrow();
+        insertIfNonExistent(repository, 1L, new Offer(
+                1L,
+                drug,
+                shop1,
+                123.45f
+        ));
+        insertIfNonExistent(repository, 2L, new Offer(
+                2L,
+                drug,
+                shop2,
+                98.76f
+        ));
+    }
+
     private void initPrescription(
             PrescriptionRepository prescriptionRepository,
             PatientRepository patientRepository,
@@ -91,7 +132,18 @@ public class DBLoader {
                 drug,
                 "Jeden Morgen",
                 Date.valueOf("2020-11-10"),
-                Date.valueOf("2021-03-15")
+                Date.valueOf("2021-03-15"),
+                false
+        ));
+        insertIfNonExistent(prescriptionRepository, 2L, new Prescription(
+                2L,
+                patient,
+                doctor,
+                drug,
+                "Jeden Abend",
+                Date.valueOf("2020-10-15"),
+                Date.valueOf("2021-01-20"),
+                true
         ));
     }
 

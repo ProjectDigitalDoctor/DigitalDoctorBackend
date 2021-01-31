@@ -1,5 +1,6 @@
 package com.digitaldoctor.digitaldoctor.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,9 @@ public class Offer {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Drug drug;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Shop shop;
     private Float price;
 }
