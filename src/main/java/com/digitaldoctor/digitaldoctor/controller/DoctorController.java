@@ -26,7 +26,7 @@ public class DoctorController {
     }
 
     @GetMapping("/doctor/search")
-    List<Doctor> searchDoctors(@RequestBody Object searchParameters) {
+    List<Doctor> searchDoctors() {
         return doctorRepository.findAll();
     }
 }
