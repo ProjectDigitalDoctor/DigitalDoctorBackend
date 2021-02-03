@@ -1,14 +1,14 @@
 package com.digitaldoctor.digitaldoctor.controller;
 
-import com.digitaldoctor.digitaldoctor.entities.Offer;
-import com.digitaldoctor.digitaldoctor.entities.Prescription;
-import com.digitaldoctor.digitaldoctor.repositories.OfferRepository;
-import com.digitaldoctor.digitaldoctor.repositories.PrescriptionRepository;
+import com.digitaldoctor.digitaldoctor.entities.*;
+import com.digitaldoctor.digitaldoctor.repositories.*;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 class PrescriptionNotFoundException extends RuntimeException {
     PrescriptionNotFoundException(Long id) {
@@ -32,6 +32,9 @@ class OfferNotFoundException extends RuntimeException {
 @RequiredArgsConstructor
 public class PrescriptionController {
     private final PrescriptionRepository prescriptionRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final DrugRepository drugRepository;
     private final Long loggedInUserID = 1L;
 
     @GetMapping("/prescription")
@@ -73,5 +76,27 @@ public class PrescriptionController {
 
         prescription.setRedeemed(true);
         prescriptionRepository.save(prescription);
+    }
+
+    @AllArgsConstructor
+    @ToString
+    private static class RequestPrescription {
+        public Long patientID;
+        public Long doctorID;
+        public String drugPZN;
+        public String usage;
+        public String dateOfIssue;
+        public String validUntil;
+        public boolean redeemed;
+    }
+
+    @PostMapping("/prescription/")
+    void createPrescription(@RequestBody RequestPrescription requestPrescription) {
+        Patient patient = patientRepository.findById(requestPrescription.patientID).orElseThrow();
+        Doctor doctor = doctorRepository.findById(requestPrescription.doctorID).orElseThrow();
+        Drug drug = drugRepository.findById(requestPrescription.drugPZN).orElseThrow();
+
+        Prescription prescription = new Prescription(null, patient, doctor, drug, requestPrescription.usage, Date.valueOf(requestPrescription.dateOfIssue), Date.valueOf(requestPrescription.validUntil), requestPrescription.redeemed);
+        System.out.println("Created " + prescriptionRepository.saveAndFlush(prescription));
     }
 }

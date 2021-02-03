@@ -3,19 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>DigitalDoctor - Doctor Interface</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.8.0/twilio-video.min.js"></script>
 </head>
 <body>
+    <h3>Create Room & Join</h3>
     <label>Appointment ID: </label>
-    <input type="text" id="appointment_input">
-    <br>
-    <label>Patient Login (for Join only): </label>
-    <input type="text" id="user_input">
-    <input type="text" id="password_input">
-    <br>
+    <input type="text" id="create_appointment_input" value="1"><br>
     <input type="button" id="create_button" onclick="createRoom()" value="Create Room & Join">
+
+    <h3>Join Room</h3>
+    <label>Appointment ID: </label>
+    <input type="text" id="join_appointment_input" value="1">
+    <label>Patient Username: </label>
+    <input type="text" id="join_user_input" value="-">
+    <label>Patient Password: </label>
+    <input type="text" id="join_password_input" value="-"><br>
     <input type="button" id="join_button" onclick="joinRoom()" value="Join Room">
 
+    <h3>Create Appointment</h3>
+    <label>Patient ID: </label>
+    <input type="text" id="app_patient_input" value="1">
+    <label>Doctor ID: </label>
+    <input type="text" id="app_doctor_input" value="1">
+    <label>Reason:</label>
+    <input type="text" id="app_reason_input" value="Wichtiger Termin">
+    <label>Timestamp:</label>
+    <input type="text" id="app_timestamp_input" value="2021-02-10 10:15:00">
+    <label>Duration in min:</label>
+    <input type="text" id="app_duration_input" value="30"><br>
+    <input type="button" id="app_button" onclick="createAppointment()" value="Create Appointment">
+
+    <h3>Create Prescription</h3>
+    <label>Patient ID: </label>
+    <input type="text" id="pre_patient_input" value="1">
+    <label>Doctor ID: </label>
+    <input type="text" id="pre_doctor_input" value="1">
+    <label>Drug PZN:</label>
+    <input type="text" id="pre_drug_input" value="AAA123">
+    <label>Usage Description:</label>
+    <input type="text" id="pre_usage_input" value="Jeden Morgen">
+    <label>Date of issue:</label>
+    <input type="text" id="pre_issue_input" value="2021-02-10">
+    <label>Expiry date:</label>
+    <input type="text" id="pre_expiry_input" value="2021-03-10">
+    <label>Redeemed:</label>
+    <input type="checkbox" id="pre_redeemed_input"><br>
+    <input type="button" id="pre_button" onclick="createPrescription()" value="Create Prescription">
+
+    <h3>Create Medical Certificate</h3>
+    <label>Patient ID: </label>
+    <input type="text" id="cert_patient_input" value="1">
+    <label>Doctor ID: </label>
+    <input type="text" id="cert_doctor_input" value="1">
+    <label>Reason:</label>
+    <input type="text" id="cert_reason_input" value="Wichtiger Grund">
+    <label>Expiry date:</label>
+    <input type="text" id="cert_expiry_input" value="2021-03-10"><br>
+    <input type="button" id="cert_button" onclick="createMedicalCertificate()" value="Create Medical Certificate">
+
+    <h3>Video Call</h3>
     <div id="remote-media-div"></div>
 
     <script src="script.js"></script>

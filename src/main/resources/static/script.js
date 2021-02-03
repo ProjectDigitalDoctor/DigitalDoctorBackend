@@ -1,15 +1,70 @@
 const Video = Twilio.Video;
 
 function createRoom() {
-    const appointmentID = document.getElementById("appointment_input").value;
+    const appointmentID = document.getElementById("create_appointment_input").value;
     const url = buildAPIUrl("/appointment/" + appointmentID + "/create-room");
     fetchAndJoin(url);
 }
 
 function joinRoom() {
-    const appointmentID = document.getElementById("appointment_input").value;
+    const appointmentID = document.getElementById("join_appointment_input").value;
     const url = buildAPIUrl("/appointment/" + appointmentID + "/join");
     fetchAndJoin(url);
+}
+
+function createAppointment() {
+    const body = {
+        patientID: document.getElementById("app_patient_input").value,
+        doctorID: document.getElementById("app_doctor_input").value,
+        reason: document.getElementById("app_reason_input").value,
+        timestamp: document.getElementById("app_timestamp_input").value,
+        duration: document.getElementById("app_duration_input").value
+    };
+    const url = buildAPIUrl("/appointment/");
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).catch((error) => console.error('Create Appointment:', error));
+}
+
+function createPrescription() {
+    const body = {
+        patientID: document.getElementById("pre_patient_input").value,
+        doctorID: document.getElementById("pre_doctor_input").value,
+        drugPZN: document.getElementById("pre_drug_input").value,
+        usage: document.getElementById("pre_usage_input").value,
+        dateOfIssue: document.getElementById("pre_issue_input").value,
+        validUntil: document.getElementById("pre_expiry_input").value,
+        redeemed: document.getElementById("pre_redeemed_input").checked,
+    };
+    const url = buildAPIUrl("/prescription/");
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).catch((error) => console.error('Create Prescription:', error));
+}
+
+function createMedicalCertificate() {
+    const body = {
+        patientID: document.getElementById("cert_patient_input").value,
+        doctorID: document.getElementById("cert_doctor_input").value,
+        reason: document.getElementById("cert_reason_input").value,
+        validUntil: document.getElementById("pre_expiry_input").value,
+    };
+    const url = buildAPIUrl("/medical-certificate/");
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).catch((error) => console.error('Create Medical Certificate:', error));
 }
 
 function buildAPIUrl(path) {

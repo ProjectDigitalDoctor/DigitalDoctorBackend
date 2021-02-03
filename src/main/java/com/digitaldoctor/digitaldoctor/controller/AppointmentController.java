@@ -5,12 +5,15 @@ import com.digitaldoctor.digitaldoctor.entities.Appointment;
 import com.digitaldoctor.digitaldoctor.entities.Doctor;
 import com.digitaldoctor.digitaldoctor.entities.Patient;
 import com.digitaldoctor.digitaldoctor.repositories.AppointmentRepository;
+import com.digitaldoctor.digitaldoctor.repositories.DoctorRepository;
 import com.digitaldoctor.digitaldoctor.repositories.PatientRepository;
 import com.twilio.twiml.video.Room;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +34,8 @@ class AppointmentNotStartedException extends RuntimeException {
 @RequiredArgsConstructor
 public class AppointmentController {
     private final AppointmentRepository appointmentRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
     private final TwilioRoom twilioRoom;
     private final Long loggedInUserID = 1L;
 
@@ -101,5 +106,24 @@ public class AppointmentController {
         String accessKey = twilioRoom.getAccessKey(roomName, "doctor");
 
         return new RoomReturn(roomName, accessKey);
+    }
+
+    @AllArgsConstructor
+    @ToString
+    private static class RequestAppointment {
+        public Long patientID;
+        public Long doctorID;
+        public String reason;
+        public String timestamp;
+        public Integer duration;
+    }
+
+    @PostMapping("/appointment/")
+    void createAppointment(@RequestBody RequestAppointment requestAppointment) {
+        Patient patient = patientRepository.findById(requestAppointment.patientID).orElseThrow();
+        Doctor doctor = doctorRepository.findById(requestAppointment.doctorID).orElseThrow();
+
+        Appointment appointment = new Appointment(null, patient, doctor, Timestamp.valueOf(requestAppointment.timestamp), requestAppointment.duration, requestAppointment.reason, null);
+        System.out.println("Created " + appointmentRepository.saveAndFlush(appointment));
     }
 }
