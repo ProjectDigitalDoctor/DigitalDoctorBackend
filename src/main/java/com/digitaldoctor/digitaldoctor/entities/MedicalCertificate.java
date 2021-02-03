@@ -23,5 +23,6 @@ public class MedicalCertificate {
     @ManyToOne
     private Doctor doctor;
     private String reason;
+    private Date dateOfIssue;
     private Date validUntil;
 }

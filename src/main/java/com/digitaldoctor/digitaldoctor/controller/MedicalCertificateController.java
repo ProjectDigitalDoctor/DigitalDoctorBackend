@@ -47,6 +47,7 @@ public class MedicalCertificateController {
         public Long patientID;
         public Long doctorID;
         public String reason;
+        public String dateOfIssue;
         public String validUntil;
     }
 
@@ -55,7 +56,7 @@ public class MedicalCertificateController {
         Patient patient = patientRepository.findById(requestMedicalCertificate.patientID).orElseThrow();
         Doctor doctor = doctorRepository.findById(requestMedicalCertificate.doctorID).orElseThrow();
 
-        MedicalCertificate medicalCertificate = new MedicalCertificate(null, patient, doctor, requestMedicalCertificate.reason, Date.valueOf(requestMedicalCertificate.validUntil));
+        MedicalCertificate medicalCertificate = new MedicalCertificate(null, patient, doctor, requestMedicalCertificate.reason, Date.valueOf(requestMedicalCertificate.dateOfIssue), Date.valueOf(requestMedicalCertificate.validUntil));
         System.out.println("Created " + medicalCertificateRepository.saveAndFlush(medicalCertificate));
     }
 }

@@ -159,7 +159,8 @@ public class DBLoader {
                 patient,
                 doctor,
                 "Urlaubsentzug",
-                Date.valueOf("2021-01-10")
+                Date.valueOf("2021-01-01"),
+                Date.valueOf("2021-03-10")
         ));
     }
 

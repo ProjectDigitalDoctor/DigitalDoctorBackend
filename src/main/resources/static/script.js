@@ -55,6 +55,7 @@ function createMedicalCertificate() {
         patientID: document.getElementById("cert_patient_input").value,
         doctorID: document.getElementById("cert_doctor_input").value,
         reason: document.getElementById("cert_reason_input").value,
+        dateOfIssue: document.getElementById("cert_issue_input").value,
         validUntil: document.getElementById("cert_expiry_input").value,
     };
     const url = buildAPIUrl("/medical-certificate/");
