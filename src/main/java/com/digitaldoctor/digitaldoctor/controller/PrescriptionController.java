@@ -90,7 +90,7 @@ public class PrescriptionController {
         public boolean redeemed;
     }
 
-    @PostMapping("/prescription/")
+    @PostMapping("/prescription")
     void createPrescription(@RequestBody RequestPrescription requestPrescription) {
         Patient patient = patientRepository.findById(requestPrescription.patientID).orElseThrow();
         Doctor doctor = doctorRepository.findById(requestPrescription.doctorID).orElseThrow();

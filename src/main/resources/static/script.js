@@ -20,7 +20,7 @@ function createAppointment() {
         timestamp: document.getElementById("app_timestamp_input").value,
         duration: document.getElementById("app_duration_input").value
     };
-    const url = buildAPIUrl("/appointment/");
+    const url = buildAPIUrl("/appointment");
     fetch(url, {
         method: "POST",
         body: JSON.stringify(body),
@@ -40,7 +40,7 @@ function createPrescription() {
         validUntil: document.getElementById("pre_expiry_input").value,
         redeemed: document.getElementById("pre_redeemed_input").checked,
     };
-    const url = buildAPIUrl("/prescription/");
+    const url = buildAPIUrl("/prescription");
     fetch(url, {
         method: "POST",
         body: JSON.stringify(body),
@@ -58,7 +58,7 @@ function createMedicalCertificate() {
         dateOfIssue: document.getElementById("cert_issue_input").value,
         validUntil: document.getElementById("cert_expiry_input").value,
     };
-    const url = buildAPIUrl("/medical-certificate/");
+    const url = buildAPIUrl("/medical-certificate");
     fetch(url, {
         method: "POST",
         body: JSON.stringify(body),

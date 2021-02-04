@@ -44,14 +44,6 @@ public class AppointmentController {
         return appointmentRepository.findByPatientId(loggedInUserID);
     }
 
-    @PostMapping("/appointment")
-    Appointment createAppointment(@RequestBody Appointment newAppointment) {
-        Patient overwritePatient = new Patient();
-        overwritePatient.setId(newAppointment.getPatient().getId());
-        newAppointment.setPatient(overwritePatient);
-        return appointmentRepository.save(newAppointment);
-    }
-
     @GetMapping("/appointment/{id}")
     Appointment getAppointment(@PathVariable Long id) {
         return appointmentRepository.findByIdAndPatientId(id, loggedInUserID)
@@ -118,7 +110,7 @@ public class AppointmentController {
         public Integer duration;
     }
 
-    @PostMapping("/appointment/")
+    @PostMapping("/appointment")
     void createAppointment(@RequestBody RequestAppointment requestAppointment) {
         Patient patient = patientRepository.findById(requestAppointment.patientID).orElseThrow();
         Doctor doctor = doctorRepository.findById(requestAppointment.doctorID).orElseThrow();
