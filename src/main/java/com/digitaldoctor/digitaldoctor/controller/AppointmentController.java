@@ -37,22 +37,25 @@ public class AppointmentController {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
     private final TwilioRoom twilioRoom;
-    private final Long loggedInUserID = 1L;
+    private final AuthPatientProvider authPatientProvider;
 
     @GetMapping("/appointment")
     List<Appointment> getAppointments() {
-        return appointmentRepository.findByPatientId(loggedInUserID);
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return appointmentRepository.findByPatientId(patient.getId());
     }
 
     @GetMapping("/appointment/{id}")
     Appointment getAppointment(@PathVariable Long id) {
-        return appointmentRepository.findByIdAndPatientId(id, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return appointmentRepository.findByIdAndPatientId(id, patient.getId())
                 .orElseThrow(() -> new AppointmentNotFoundException(id));
     }
 
     @PutMapping("/appointment/{id}")
     Appointment updateAppointment(@RequestBody Appointment updatedAppointment, @PathVariable Long id) {
-        return appointmentRepository.findByIdAndPatientId(id, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return appointmentRepository.findByIdAndPatientId(id, patient.getId())
                 .map(appointment -> {
                     appointment.setTimestamp(updatedAppointment.getTimestamp());
                     appointment.setDuration(updatedAppointment.getDuration());
@@ -63,25 +66,27 @@ public class AppointmentController {
 
     @DeleteMapping("/appointment/{id}")
     void deleteAppointment(@PathVariable Long id) {
-        appointmentRepository.deleteByIdAndPatientId(id, loggedInUserID);
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        appointmentRepository.deleteByIdAndPatientId(id, patient.getId());
     }
 
     @AllArgsConstructor
-    private class RoomReturn {
+    private static class RoomReturn {
         public String roomName;
         public String accessKey;
     }
 
     @PostMapping("/appointment/{id}/join")
     Object joinAppointment(@PathVariable Long id) {
-        Appointment appointment = appointmentRepository.findByIdAndPatientId(id, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        Appointment appointment = appointmentRepository.findByIdAndPatientId(id, patient.getId())
                 .orElseThrow(() -> new AppointmentNotFoundException(id));
 
         if (appointment.getVideoRoomName() == null || appointment.getVideoRoomName().isBlank()) {
             throw new AppointmentNotStartedException(id);
         }
 
-        String accessKey = twilioRoom.getAccessKey(appointment.getVideoRoomName(), loggedInUserID.toString());
+        String accessKey = twilioRoom.getAccessKey(appointment.getVideoRoomName(), patient.getId().toString());
 
         return new RoomReturn(appointment.getVideoRoomName(), accessKey);
     }

@@ -28,16 +28,18 @@ public class MedicalCertificateController {
     private final MedicalCertificateRepository medicalCertificateRepository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
-    private final Long loggedInUserID = 1L;
+    private final AuthPatientProvider authPatientProvider;
 
     @GetMapping("/medical-certificate")
     List<MedicalCertificate> getMedicalCertificates() {
-        return medicalCertificateRepository.findByPatientId(loggedInUserID);
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return medicalCertificateRepository.findByPatientId(patient.getId());
     }
 
     @GetMapping("/medical-certificate/{id}")
     MedicalCertificate getMedicalCertificate(@PathVariable Long id) {
-        return medicalCertificateRepository.findByIdAndPatientId(id, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return medicalCertificateRepository.findByIdAndPatientId(id, patient.getId())
                 .orElseThrow(() -> new MedicalCertificateNotFoundException(id));
     }
 

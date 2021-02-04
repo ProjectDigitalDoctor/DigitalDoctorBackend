@@ -35,22 +35,25 @@ public class PrescriptionController {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
     private final DrugRepository drugRepository;
-    private final Long loggedInUserID = 1L;
+    private final AuthPatientProvider authPatientProvider;
 
     @GetMapping("/prescription")
     List<Prescription> getPrescriptions() {
-        return prescriptionRepository.findByPatientId(loggedInUserID);
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return prescriptionRepository.findByPatientId(patient.getId());
     }
 
     @GetMapping("/prescription/{id}")
     Prescription getPrescription(@PathVariable Long id) {
-        return prescriptionRepository.findByIdAndPatientId(id, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        return prescriptionRepository.findByIdAndPatientId(id, patient.getId())
                 .orElseThrow(() -> new PrescriptionNotFoundException(id));
     }
 
     @PostMapping("/prescription/{prescriptionId}/offer/{offerId}/order")
     void orderPrescription(@PathVariable Long prescriptionId, @PathVariable Long offerId) {
-        Prescription prescription = prescriptionRepository.findByIdAndPatientId(prescriptionId, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        Prescription prescription = prescriptionRepository.findByIdAndPatientId(prescriptionId, patient.getId())
                 .orElseThrow(() -> new PrescriptionNotFoundException(prescriptionId));
 
         if (prescription.getRedeemed()) {
@@ -67,7 +70,8 @@ public class PrescriptionController {
 
     @GetMapping("/prescription/{prescriptionId}/redeem")
     void redeemPrescription(@PathVariable Long prescriptionId) {
-        Prescription prescription = prescriptionRepository.findByIdAndPatientId(prescriptionId, loggedInUserID)
+        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
+        Prescription prescription = prescriptionRepository.findByIdAndPatientId(prescriptionId, patient.getId())
                 .orElseThrow(() -> new PrescriptionNotFoundException(prescriptionId));
 
         if (prescription.getRedeemed()) {
