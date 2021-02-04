@@ -21,6 +21,8 @@ public class Patient {
 
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
     private Date birthdate;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;

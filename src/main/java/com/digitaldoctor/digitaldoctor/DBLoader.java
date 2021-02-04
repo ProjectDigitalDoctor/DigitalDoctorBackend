@@ -2,20 +2,20 @@ package com.digitaldoctor.digitaldoctor;
 
 import com.digitaldoctor.digitaldoctor.entities.*;
 import com.digitaldoctor.digitaldoctor.repositories.*;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
+@AllArgsConstructor
 public class DBLoader {
     private static final Logger log = LoggerFactory.getLogger(DBLoader.class);
 
@@ -47,6 +47,8 @@ public class DBLoader {
                 1L,
                 "Hubertus",
                 "Maier",
+                "hubertus.maier",
+                new BCryptPasswordEncoder().encode("password123"),
                 Date.valueOf("1954-12-28"),
                 new Address(null, "Theresienstraße", "95", "12803", "Waldhausen"),
                 new Workplace(null, "ABC GmbH", "mail@abc.de", new Address(null, "Haldenweg", "7", "12805", "Waldhausen")),
