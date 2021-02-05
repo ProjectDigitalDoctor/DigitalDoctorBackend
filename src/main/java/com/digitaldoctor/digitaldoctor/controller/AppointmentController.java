@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;

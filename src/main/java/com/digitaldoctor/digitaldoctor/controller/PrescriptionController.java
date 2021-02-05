@@ -70,8 +70,7 @@ public class PrescriptionController {
 
     @GetMapping("/prescription/{prescriptionId}/redeem")
     void redeemPrescription(@PathVariable Long prescriptionId) {
-        Patient patient = authPatientProvider.getLoggedInPatient().orElseThrow(PatientNotFoundException::new);
-        Prescription prescription = prescriptionRepository.findByIdAndPatientId(prescriptionId, patient.getId())
+        Prescription prescription = prescriptionRepository.findById(prescriptionId)
                 .orElseThrow(() -> new PrescriptionNotFoundException(prescriptionId));
 
         if (prescription.getRedeemed()) {

@@ -2,6 +2,7 @@ package com.digitaldoctor.digitaldoctor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @Configuration
