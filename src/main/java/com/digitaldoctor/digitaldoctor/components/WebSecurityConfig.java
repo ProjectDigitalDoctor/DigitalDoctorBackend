@@ -35,7 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/", "/index.html", "/script.js", "/style.css")
-            .and().ignoring().antMatchers(HttpMethod.POST, "/appointment", "/medical-certificate", "/prescription", "/appointment/*/create-room", "/patient", "/prescription/*/redeem");
+            .and().ignoring().antMatchers(HttpMethod.POST, "/appointment", "/medical-certificate", "/prescription", "/appointment/*/create-room", "/patient", "/prescription/*/redeem", "/error",
+                "/appointment/", "/medical-certificate/", "/prescription/", "/appointment/*/create-room/", "/patient/", "/prescription/*/redeem/", "/error/");
     }
 
     @Override
