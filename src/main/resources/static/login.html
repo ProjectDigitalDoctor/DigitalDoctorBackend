@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Spring Security Example </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/public/static/style.css">
+</head>
+<body>
+    <div>
+        <h1>Welcome and Login</h1>
+    </div>
+
+    <div>
+        <h3>Log in</h3>
+        <label>Username: </label>
+        <input type="text" id="log_in_user_name"><br>
+        <label>Password: </label>
+        <input type="password" id="log_in_password"><br>
+        <input type="button" id="log_in_button" onclick="logInUser()" value="Log In">
+    </div>
+    <div>
+        <h3>Create Account</h3>
+        <label>Username: </label>
+        <input type="text" id="create_account_user_name"><br>
+        <label>Password: </label>
+        <input type="password" id="create_account_password"><br>
+        <input type="button" id="create_account_button" onclick="createNewUser()" value="Create">
+    </div>
+    <script src="../static/public/static/script.js"></script>
+</body>
+</html>

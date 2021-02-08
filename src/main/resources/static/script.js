@@ -12,6 +12,37 @@ function joinRoom() {
     fetchAndJoin(url);
 }
 
+function logInUser() {
+    const body = {
+        patientName: document.getElementById("log_in_user_name"),
+        patientPassword: document.getElementById("log_in_password")
+    };
+    console.log("FICK DICH");
+    const url = buildAPIUrl("/exit");
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).catch((error) => console.error('Log In:', error));
+}
+
+function createNewUser() {
+    const body = {
+        patientName: document.getElementById("log_in_user_name"),
+        patientPassword: document.getElementById("log_in_password")
+    };
+    const url = buildAPIUrl("/createUser");
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).catch((error) => console.error('Log In:', error));
+}
+
 function createAppointment() {
     const body = {
         patientID: document.getElementById("app_patient_input").value,
@@ -110,4 +141,5 @@ function internalJoin(roomName, accessKey) {
       console.error(`Unable to connect to Room: ${error.message}`);
     });
 }
+
 

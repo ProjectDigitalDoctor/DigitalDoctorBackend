@@ -3,6 +3,7 @@ package com.digitaldoctor.digitaldoctor.components;
 import com.digitaldoctor.digitaldoctor.entities.Patient;
 import com.digitaldoctor.digitaldoctor.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,9 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 public class PatientAuthDetailsService implements UserDetailsService {
-    private final PatientRepository patientRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Override
     @Transactional

@@ -1,6 +1,10 @@
 package com.digitaldoctor.digitaldoctor.components;
 
+import com.digitaldoctor.digitaldoctor.DBLoader;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,29 +24,47 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final PatientAuthDetailsService patientAuthDetailsService;
+
+    @Autowired
+    private PatientAuthDetailsService patientAuthDetailsService;
+
+    private static final Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .httpBasic()
-            .and()
-            .csrf().disable();
+
+        http
+                .csrf().disable()
+                .authorizeRequests()
+              //  .antMatchers("/public/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                    .permitAll()
+                .and()
+                .httpBasic();
+        /*
+                .formLogin()
+                    .loginPage("/login")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .permitAll();
+                */
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/index.html", "/script.js", "/style.css")
-            .and().ignoring().antMatchers(HttpMethod.POST, "/appointment", "/medical-certificate", "/prescription", "/appointment/*/create-room", "/patient", "/prescription/*/redeem");
+        web.ignoring().antMatchers(   "/script.js", "/style.css");
+          //  .and().ignoring().antMatchers(HttpMethod.POST, "/appointment", "/medical-certificate", "/prescription", "/appointment/*/create-room", "/patient", "/prescription/*/redeem");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .userDetailsService(patientAuthDetailsService)
-            .passwordEncoder(new BCryptPasswordEncoder());
+                .userDetailsService(patientAuthDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
+
 }
 
