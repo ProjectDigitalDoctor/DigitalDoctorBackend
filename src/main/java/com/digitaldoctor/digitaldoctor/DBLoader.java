@@ -45,10 +45,10 @@ public class DBLoader {
     private void initPatient(PatientRepository repository) {
         insertIfNonExistent(repository, 1L, new Patient(
                 1L,
-                "test",
-                "test",
-                "test.test",
-                new BCryptPasswordEncoder().encode("test"),
+                "Hubertus",
+                "Maier",
+                "hubertus.maier",
+                new BCryptPasswordEncoder().encode("password123"),
                 Date.valueOf("1954-12-28"),
                 new Address(null, "Theresienstraße", "95", "12803", "Waldhausen"),
                 new Workplace(null, "ABC GmbH", "mail@abc.de", new Address(null, "Haldenweg", "7", "12805", "Waldhausen")),
