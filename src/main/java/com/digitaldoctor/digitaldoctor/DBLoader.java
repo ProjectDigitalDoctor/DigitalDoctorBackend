@@ -225,7 +225,7 @@ public class DBLoader {
                 1L,
                 patient,
                 doctor,
-                Timestamp.valueOf("2021-01-10 10:15:00"),
+                Timestamp.valueOf("2021-01-11 10:15:00"),
                 15,
                 "Routine Untersuchung",
                 null

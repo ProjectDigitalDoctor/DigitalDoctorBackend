@@ -1,27 +1,22 @@
-# Getting Started
+# DigitalDoctor Backend
 
-### Reference Documentation
-For further reference, please consider the following sections:
+This server is for a prototype of an app for digital doctor appointments, prescriptions and medical certificates.
+It has been built for the "Mobile Software Engineering" course at the HS Mannheim.
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.4.0/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.4.0/gradle-plugin/reference/html/#build-image)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.4.0/reference/htmlsingle/#using-boot-devtools)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.4.0/reference/htmlsingle/#boot-features-developing-web-applications)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.4.0/reference/htmlsingle/#boot-features-jpa-and-spring-data)
+It is build in Java with Spring Boot and is to be used together with the [DigitalDoctor App](https://github.com/ProjectDigitalDoctor/DigitalDoctorApp).
 
-### Guides
-The following guides illustrate how to use some features concretely:
+## Getting started
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+To run the server locally, a recent version of Java has to be installed on the system.
+Afterwards simply `./gradlew bootRun` or `.\gradlew.bat bootRun` has to be executed.
+The server is now running at `http://localhost:8080`.
 
-### Additional Links
-These additional references should also help you:
+To build a docker image, use the `bootBuildImage` gradle command.
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+## Demo page
+
+For demo purposes a web page is available at the root server URL.
+On this page video calls can be started (if Twilio is set up) in order for the app to join the call or other entities can be created.
 
 ## Swagger / OpenAPI
 
@@ -41,13 +36,3 @@ These additional references should also help you:
     - Room Type: `go`
     - Maximum Participants: 2
     - Client-Side Room Creation: Off
-    
-### Usage
-
-- Start the server
-- Go to the Doctor backend at `localhost:8080`
-- Enter a valid appointment id (`1` should always be available)
-- Click on `Create Room & Join` to create a new room, save the meeting name into the apointment and join in the browser
-- Open a second browser and do the same steps (Login at the moment not needed)
-- Click on `Join Room` to join the meeting with the name saved in the appointment
-- You should now have a video call between these two browsers
