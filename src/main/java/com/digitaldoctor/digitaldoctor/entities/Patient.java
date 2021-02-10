@@ -21,6 +21,7 @@ public class Patient {
 
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String username;
     private String password;
     private Date birthdate;

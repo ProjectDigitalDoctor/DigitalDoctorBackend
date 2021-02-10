@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DigitalDoctor - Doctor Interface</title>
-    <link rel="stylesheet" href="../static/public/static/style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.8.0/twilio-video.min.js"></script>
 </head>
 <body>
@@ -19,11 +19,6 @@
     <label>Appointment ID: </label>
     <input type="text" id="create_appointment_input" value="1"><br>
     <input type="button" id="create_button" onclick="createRoom()" value="Create Room & Join">
-
-    <h3>Join Room</h3>
-    <label>Appointment ID: </label>
-    <input type="text" id="join_appointment_input" value="1">
-    <input type="button" id="join_button" onclick="joinRoom()" value="Join Room">
 
     <h3>Create Appointment</h3>
     <label>Patient ID: </label>
@@ -71,6 +66,6 @@
     <h3>Video Call</h3>
     <div id="remote-media-div"></div>
 
-    <script src="../static/public/static/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

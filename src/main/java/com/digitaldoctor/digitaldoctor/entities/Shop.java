@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Shop {
     private Address address;
     private String mailAddress;
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy = "shop", fetch = FetchType.EAGER)
     private List<Offer> offers;
 }

@@ -67,7 +67,7 @@ public class DBLoader {
                 "Allgemeinmediziner"));
         insertIfNonExistent(repository, 2L, new Doctor(
                 2L,
-                "Peter",
+                "Dr. Peter",
                 "Meier",
                 new Address(null, "Gartenweg", "7", "32042", "Mühlheim"),
                 "HNO"));
@@ -76,8 +76,16 @@ public class DBLoader {
     private void initDrug(DrugRepository repository) {
         insertIfNonExistent(repository, "AAA123", new Drug(
                 "AAA123",
-                "My Drug",
-                new Manufacturer(null, null, "That Manufacturer", new Address()),
+                "Schmerzmittel",
+                new Manufacturer(null, null, "Medicine GmbH", new Address()),
+                "None",
+                "Oral",
+                null
+        ));
+        insertIfNonExistent(repository, "BBB345", new Drug(
+                "BBB345",
+                "Erkältungsmittel",
+                new Manufacturer(null, null, "Medicine GmbH", new Address()),
                 "None",
                 "Oral",
                 null
@@ -87,35 +95,48 @@ public class DBLoader {
     private void initShop(ShopRepository repository) {
         insertIfNonExistent(repository, 1L, new Shop(
                 1L,
-                "Online Apotheke BliBlaBlub",
+                "Online Apotheke Pelikan",
                 new Address(null, "Marktstraße", "27", "21343", "Berlin"),
-                "info@apotheke-bliblablub.de",
+                "info@apotheke-pelikan.de",
                 null
         ));
         insertIfNonExistent(repository, 2L, new Shop(
                 2L,
-                "Online Apotheke PiPaPo",
+                "Online Apotheke Schwan",
                 new Address(null, "Hermannstraße", "82A", "93234", "Hamburg"),
-                "info@apotheke-PiPaPo.de",
+                "info@apotheke-schwan.de",
                 null
         ));
     }
 
     private void initOffers(OfferRepository repository, DrugRepository drugRepository, ShopRepository shopRepository) {
-        Drug drug = drugRepository.findById("AAA123").orElseThrow();
+        Drug drug1 = drugRepository.findById("AAA123").orElseThrow();
+        Drug drug2 = drugRepository.findById("BBB345").orElseThrow();
         Shop shop1 = shopRepository.findById(1L).orElseThrow();
         Shop shop2 = shopRepository.findById(2L).orElseThrow();
         insertIfNonExistent(repository, 1L, new Offer(
                 1L,
-                drug,
+                drug1,
                 shop1,
                 123.45f
         ));
         insertIfNonExistent(repository, 2L, new Offer(
                 2L,
-                drug,
+                drug1,
                 shop2,
                 98.76f
+        ));
+        insertIfNonExistent(repository, 3L, new Offer(
+                3L,
+                drug2,
+                shop1,
+                13.4f
+        ));
+        insertIfNonExistent(repository, 4L, new Offer(
+                4L,
+                drug2,
+                shop2,
+                9.7f
         ));
     }
 
@@ -127,13 +148,14 @@ public class DBLoader {
         Doctor doctor = doctorRepository.findById(1L).orElseThrow();
         Patient patient = patientRepository.findById(1L).orElseThrow();
         Drug drug = drugRepository.findById("AAA123").orElseThrow();
+        Drug drug2 = drugRepository.findById("BBB345").orElseThrow();
         insertIfNonExistent(prescriptionRepository, 1L, new Prescription(
                 1L,
                 patient,
                 doctor,
                 drug,
                 "Jeden Morgen",
-                Date.valueOf("2020-11-10"),
+                Date.valueOf("2020-02-05"),
                 Date.valueOf("2021-03-15"),
                 false
         ));
@@ -146,6 +168,16 @@ public class DBLoader {
                 Date.valueOf("2020-10-15"),
                 Date.valueOf("2021-01-20"),
                 true
+        ));
+        insertIfNonExistent(prescriptionRepository, 3L, new Prescription(
+                3L,
+                patient,
+                doctor,
+                drug2,
+                "Jeden Morgen",
+                Date.valueOf("2021-02-11"),
+                Date.valueOf("2021-03-11"),
+                false
         ));
     }
 
@@ -162,7 +194,23 @@ public class DBLoader {
                 doctor,
                 "Urlaubsentzug",
                 Date.valueOf("2021-01-01"),
-                Date.valueOf("2021-03-10")
+                Date.valueOf("2021-01-15")
+        ));
+        insertIfNonExistent(medicalCertificateRepository, 2L, new MedicalCertificate(
+                2L,
+                patient,
+                doctor,
+                "Arbeitsunfähig aufgrund von Rückenschmerzen",
+                Date.valueOf("2021-02-05"),
+                Date.valueOf("2021-02-10")
+        ));
+        insertIfNonExistent(medicalCertificateRepository, 3L, new MedicalCertificate(
+                3L,
+                patient,
+                doctor,
+                "Arbeitsunfähig aufgrund einer starken Erkältung",
+                Date.valueOf("2021-02-11"),
+                Date.valueOf("2021-02-20")
         ));
     }
 
@@ -177,8 +225,8 @@ public class DBLoader {
                 1L,
                 patient,
                 doctor,
-                Timestamp.valueOf("2021-02-10 10:15:00"),
-                60,
+                Timestamp.valueOf("2021-01-10 10:15:00"),
+                15,
                 "Routine Untersuchung",
                 null
         ));
@@ -186,9 +234,18 @@ public class DBLoader {
                 2L,
                 patient,
                 doctor,
-                Timestamp.valueOf("2021-02-25 08:00:00"),
-                40,
-                "Untersuchung bzg. ...",
+                Timestamp.valueOf("2021-02-05 08:00:00"),
+                20,
+                "Rückenschmerzen",
+                null
+        ));
+        insertIfNonExistent(appointmentRepository, 3L, new Appointment(
+                3L,
+                patient,
+                doctor,
+                Timestamp.valueOf("2021-02-23 08:00:00"),
+                10,
+                "Zusätzliche Kontrolle",
                 null
         ));
     }

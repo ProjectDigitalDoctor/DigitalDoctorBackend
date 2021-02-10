@@ -28,35 +28,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PatientAuthDetailsService patientAuthDetailsService;
 
-    private static final Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .csrf().disable()
                 .authorizeRequests()
-              //  .antMatchers("/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .permitAll()
+                .permitAll()
                 .and()
                 .httpBasic();
-        /*
-                .formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .permitAll();
-                */
     }
 
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(   "/script.js", "/style.css");
-          //  .and().ignoring().antMatchers(HttpMethod.POST, "/appointment", "/medical-certificate", "/prescription", "/appointment/*/create-room", "/patient", "/prescription/*/redeem");
+        web.ignoring().antMatchers("/", "/index.html", "/script.js", "/style.css")
+            .and().ignoring().antMatchers(HttpMethod.POST, "/appointment", "/medical-certificate", "/prescription", "/appointment/*/create-room", "/patient", "/prescription/*/redeem", "/error");
     }
 
     @Override
